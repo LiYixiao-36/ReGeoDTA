@@ -61,8 +61,8 @@ def build_datasets(
     drug_graphs = load_drug_graphs(
         drug_ids,
         pretrained_root,
-        "drug_node_features_baseline",
-        normalize=False,
+        "drug_node_features",
+        normalize=True,
         description="Loading BindingDB drugs",
     )
 
