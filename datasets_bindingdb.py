@@ -10,8 +10,8 @@ from datasets_common import DTADataset, DatasetBundle, load_drug_graphs, load_pr
 
 PROTEIN_LENGTH = 1000
 AUPR_THRESHOLD = 7.0
-TRAIN_FILE = "bindingdb_train_new.csv"
-TEST_FILE = "bindingdb_test_new.csv"
+TRAIN_FILE = "bindingdb_train.csv"
+TEST_FILE = "bindingdb_test.csv"
 
 
 def _numeric_id(value: str, prefix: str) -> int:
