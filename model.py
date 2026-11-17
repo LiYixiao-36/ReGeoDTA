@@ -265,7 +265,7 @@ class ReGeoDTA(nn.Module):
         super().__init__()
         self.conv_in = nn.Conv1d(1024, EMBED_DIM, kernel_size=1)
         self.encoder = ProteinEncoder(num_heads=head_num, dropout=dropout_rate)
-        self.protein_CNNs = ProteinCNN(num_filters=36, kernel_sizes=protein_kernel)
+        self.protein_CNNs = ProteinCNN(num_filters=32, kernel_sizes=protein_kernel)
         self.gate_net = nn.Sequential(nn.Linear(EMBED_DIM, EMBED_DIM), nn.Sigmoid())
         self.max_pool = nn.AdaptiveMaxPool1d(1)
         self.drug_network = DrugGraphNetwork(graph_mid_dim=graph_mid_dim, dropout=dropout_rate)
