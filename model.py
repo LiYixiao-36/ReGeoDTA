@@ -125,7 +125,19 @@ class RelativePositionAttention(nn.Module):
         content_scores = content_scores.masked_fill(~distance_mask, float("-inf"))
 
         bucket_indices = self._distance_to_bucket(distance_matrix)
-        distance_bias = self.relative_distance_bucket_table[bucket_indices].permute(0, 3, 1, 2)
+
+        expanded_indices = bucket_indices.unsqueeze(-1).expand(
+            -1, -1, -1, self.num_heads
+        )
+        flat_indices = expanded_indices.reshape(-1, self.num_heads)
+
+        distance_bias = self.relative_distance_bucket_table.gather(
+            0, flat_indices
+        )
+        distance_bias = distance_bias.view(
+            batch_size, seq_len, seq_len_down, self.num_heads
+        ).permute(0, 3, 1, 2)
+
         distance_bias = distance_bias.masked_fill(~distance_mask, 0.0)
         attention_scores = content_scores + distance_bias + xyz_bias * self.dir_scale
 
